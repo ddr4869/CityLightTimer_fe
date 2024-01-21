@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import $ from 'jquery';
-
 function Light() {
 //const Light = () => {
     const [response, setResponse] = useState('')
+    
 
     useEffect(() => {
         // jQuery를 사용하여 Ajax 요청 보내기

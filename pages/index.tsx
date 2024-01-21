@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import $ from 'jquery';
 import Light from'./traffic_light';
+import Light_locate from './light_locate';
 //import axios from 'axios';
 
 
@@ -30,6 +31,10 @@ const IndexPage = () => {
           const map = new window.naver.maps.Map('map', mapOptions);
 
           // 마커 추가 예시
+        //   const datas = require('/public/intersection.json')
+        //   datas.forEach(item => {
+        //     console.log(item.itstId); // itstId 필드 출력
+        // });
           const marker = new window.naver.maps.Marker({
             position: new window.naver.maps.LatLng(37.5560943, 126.9342876),
             map: map,
@@ -42,29 +47,57 @@ const IndexPage = () => {
             }
           });
 
-            // 클릭시 정보 창 예제
-            var markerList = [];
-            var menuLayer = $('<div style="position:absolute;z-index:10000;background-color:#fff;border:solid 1px #333;padding:10px;display:none;"></div>');
-            map.getPanes().floatPane.appendChild(menuLayer[0]);
-          
-            marker.addListener('click', function(e) {
-              var coordHtml =
-                  'Coord: '+ '(우 클릭 지점 위/경도 좌표)' + '<br />' +
-                  'Point: ' + e.point + '<br />' +
-                  'Offset: ' + e.offset;
+          // const marker2 = new window.naver.maps.Marker({
+          //   position: new window.naver.maps.LatLng(37.8560843, 126.9342876),
+          //   map: map,
+          //   icon: {
+          //     url:"light.png",
+          //     size: new naver.maps.Size(500, 52),
+          //     scaledSize: new naver.maps.Size(40,40),
+          //     origin: new naver.maps.Point(0, 0),
+          //     anchor: new naver.maps.Point(25, 26)
+          //   }
+          // });
+
+            const datas = require('/public/intersection.json')
+            datas.forEach(item => {
+              //console.log(item.itstId); // itstId 필드 출력
+              const marker = new window.naver.maps.Marker({
+                  position: new window.naver.maps.LatLng(Number(item.mapCtptIntLat*0.0000001), Number(item.mapCtptIntLot*0.0000001)),
+                  map: map,
+                  icon: {
+                    url:"light.png",
+                    size: new naver.maps.Size(500, 52),
+                    scaledSize: new naver.maps.Size(40,40),
+                    origin: new naver.maps.Point(0, 0),
+                    anchor: new naver.maps.Point(25, 26)
+                  },
+                  title: item.itstId
+                });
+                var menuLayer = $('<div style="position:absolute;z-index:10000;background-color:#fff;border:solid 1px #333;padding:10px;display:none;"></div>');
+                map.getPanes().floatPane.appendChild(menuLayer[0]);
               
-              menuLayer.show().css({  
-                position: "absolute",
-                // left: marker.getPosition().x + "px", // x좌표
-                // top: marker.getPosition().y + "px", // y좌표
-                textAlign: "center",
-                left: e.offset.x,
-                top: e.offset.y,
-              }).html(coordHtml);
-              
-              console.log('Coord: ' + e.coord.toString());
-              
+                marker.addListener('click', function(e) {
+                  var coordHtml =
+                      'Coord: '+ '(우 클릭 지점 위/경도 좌표)' + '<br />' +
+                      'Point: ' + e.point + '<br />' +
+                      'Offset: ' + e.offset;
+                  
+                  menuLayer.show().css({  
+                    position: "relative",
+                    // left: marker.getPosition().x + "px", // x좌표
+                    // top: marker.getPosition().y + "px", // y좌표
+                    textAlign: "center",
+                    left: e.offset.x,
+                    top: e.offset.y,
+                    width: "500px",
+                    height: "80px",
+                    size: "15px"
+                  }).html(coordHtml);
+                  
+              });
           });
+
         };
 
       } catch (error) {

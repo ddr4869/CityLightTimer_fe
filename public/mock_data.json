@@ -1,0 +1,12 @@
+{
+    "itstId": "2261",
+    "itstNm": "신촌현대백화점",
+    "mapCtptIntLat": 3.75560943E8,
+    "mapCtptIntLot": 1.269342876E9,
+    "laneWidth": 254.0,
+    "limitSpedTypeNm": "vehicleMaxSpeed",
+    "limitSped": "833",
+    "itstEngNm": null,
+    "rgtrId": "V2X",
+    "regDt": "2024-01-19T16:31:08.000+00:00"
+}

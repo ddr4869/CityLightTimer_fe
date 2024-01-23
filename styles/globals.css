@@ -1,96 +1,177 @@
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
 }
 body {
-	line-height: 1;
-	user-select: none;
+  line-height: 1;
+  user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
 }
-ol, ul {
-	list-style: none;
+ol,
+ul {
+  list-style: none;
 }
-blockquote, q {
-	quotes: none;
+blockquote,
+q {
+  quotes: none;
 }
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
 }
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 :root {
-	font-size: 0.5em;
+  font-size: 0.5em;
 }
 @media (min-width: 800px) {
-	:root {
-		font-size: 0.875em;
-	}
+  :root {
+    font-size: 0.875em;
+  }
 }
 @media (min-width: 1200px) {
-	:root {
-		font-size: 1em;
-	}
+  :root {
+    font-size: 1em;
+  }
 }
 
 #me {
-	width: 15px;
-	height: 15px;
+  width: 15px;
+  height: 15px;
   margin: 15px;
   border-style: none;
   border-radius: 50%;
-  background: #00B8FF;
+  background: #00b8ff;
   cursor: pointer;
   user-select: none;
 
   animation-name: mine;
-	animation-duration: 1.5s;
-	animation-iteration-count: infinite;
-	animation-timing-function: linear;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 
 @keyframes mine {
-	0%{
-		box-shadow: 0px 0px 5px 0px rgba(0, 184, 255, .3);
-	}
-	65%{
-		box-shadow: 0px 0px 5px 13px rgba(0, 184, 255, .3);
-	}
-	90%{
-		box-shadow: 0px 0px 5px 13px rgba(0, 184, 255, 0);
-	}
+  0% {
+    box-shadow: 0px 0px 5px 0px rgba(0, 184, 255, 0.3);
+  }
+  65% {
+    box-shadow: 0px 0px 5px 13px rgba(0, 184, 255, 0.3);
+  }
+  90% {
+    box-shadow: 0px 0px 5px 13px rgba(0, 184, 255, 0);
+  }
 }
 
 .signal {
-	position: relative;
-	width: 15px;
-	height: 15px;
+  position: relative;
+  width: 15px;
+  height: 15px;
   margin: 15px;
   border-style: none;
   border-radius: 50%;
@@ -99,74 +180,88 @@ table {
 }
 
 .signal-info {
-	position: absolute;
-	background-color: #000;
-	color : #fff;
-	top : -40px;
-	text-align: center;
-	padding: 10px;
-	border-radius: 5px;
-	left: 50%;                    
-	transform: translateX(-50%);
-	opacity: 0;
-	transition: 0.5s;
-	visibility: hidden;          
+  position: absolute;
+  background-color: #000;
+  color: #fff;
+  top: -40px;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: 0.5s;
+  visibility: hidden;
 }
 
 .signal-info:after {
-	content : '';
-	position: absolute;
-	background-color:#000;
-	width : 10px;
-	height: 10px;
-	transform: rotate(45deg) translateX(-50%);
-	bottom: -5px;
-	left: 50%;
+  content: "";
+  position: absolute;
+  background-color: #000;
+  width: 10px;
+  height: 10px;
+  transform: rotate(45deg) translateX(-50%);
+  bottom: -5px;
+  left: 50%;
 }
 
-.signal:hover .signal-info{
-	opacity: 1;
-	visibility: visible;
+.signal:hover .signal-info {
+  opacity: 1;
+  visibility: visible;
 }
 
 .on {
-	background: green;
+  background: green;
 
-	animation-name: greenLight;
-	animation-duration: 1.5s;
-	animation-iteration-count: infinite;
-	animation-timing-function: linear;
+  animation-name: greenLight;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 
 .off {
-	background: red;
-	
-	animation-name: stopLight;
-	animation-duration: 1.5s;
-	animation-iteration-count: infinite;
-	animation-timing-function: linear;
+  background: red;
+
+  animation-name: stopLight;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 
-@keyframes greenLight{
-	0%{
-		box-shadow: 0px 0px 5px 0px rgba(45,201,55, .3);
-	}
-	65%{
-		box-shadow: 0px 0px 5px 13px rgba(45,201,55, .3);
-	}
-	90%{
-		box-shadow: 0px 0px 5px 13px rgba(173,0,0,0);
-	}
+@keyframes greenLight {
+  0% {
+    box-shadow: 0px 0px 5px 0px rgba(45, 201, 55, 0.3);
+  }
+  65% {
+    box-shadow: 0px 0px 5px 13px rgba(45, 201, 55, 0.3);
+  }
+  90% {
+    box-shadow: 0px 0px 5px 13px rgba(173, 0, 0, 0);
+  }
 }
 
 @keyframes stopLight {
-	0%{
-		box-shadow: 0px 0px 5px 0px rgba(173,0,0,.3);
-	}
-	65%{
-		box-shadow: 0px 0px 5px 13px rgba(173,0,0,.3);
-	}
-	90%{
-		box-shadow: 0px 0px 5px 13px rgba(173,0,0,0);
-	}
+  0% {
+    box-shadow: 0px 0px 5px 0px rgba(173, 0, 0, 0.3);
+  }
+  65% {
+    box-shadow: 0px 0px 5px 13px rgba(173, 0, 0, 0.3);
+  }
+  90% {
+    box-shadow: 0px 0px 5px 13px rgba(173, 0, 0, 0);
+  }
+
+  .container {
+    position: relative;
+  }
+
+  .heading {
+    display: inline-block;
+    position: relative;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #ffffff;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
 }

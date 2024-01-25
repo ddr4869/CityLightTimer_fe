@@ -26,5 +26,4 @@ function Light_locate(map: window.naver.maps.Map) {
     });
 }
 
-  //export default Light;
   export default Light_locate;

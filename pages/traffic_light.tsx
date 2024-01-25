@@ -32,7 +32,7 @@ function Light() {
       return (
 
         <div id="resp" style={{ wordWrap: 'break-word' }}>
-            <h1>Response from Server</h1>
+            <h1>Connection test to Server...</h1>
             <p>{response}</p>
         </div>
       );

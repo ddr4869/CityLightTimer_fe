@@ -3,6 +3,10 @@ import $ from "jquery";
 import Light from "./traffic_light";
 import Light_locate from "./light_locate";
 import styles from "./styles.module.css"; // 스타일 파일 import
+import Link from "next/link";
+import Login from "./Login";
+import LoginForm from "./Login";
+import intersection from "../public/intersection.json";
 
 declare global {
   interface Window {
@@ -14,13 +18,13 @@ const IndexPage = () => {
   useEffect(() => {
     try {
       const script = document.createElement("script");
-
       script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=a81064adde82cb18dafd95c731149644&autoload=false`;
       script.async = true;
       document.head.appendChild(script);
 
       const loadKakaoMap = () => {
         window.kakao.maps.load(() => {
+          console.log("intersection   ", intersection);
           // 위치 정보 가져오기
           if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
@@ -67,7 +71,7 @@ const IndexPage = () => {
                 // ... (나머지 데이터)
               ];
 
-              locations.forEach((location) => {
+              intersection.forEach((location) => {
                 const markerImage = new window.kakao.maps.MarkerImage(
                   "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png", // 빨간색 마커 이미지 URL
                   new window.kakao.maps.Size(24, 35), // 마커 이미지 크기
@@ -114,7 +118,17 @@ const IndexPage = () => {
 
   return (
     <div>
-      <h1>이은규</h1>
+      <div>
+        <Link href="/Bookmark">
+          <button>즐겨찾기</button>
+        </Link>
+        <Link href="/Login">
+          <button>로그인</button>
+        </Link>
+        <Link href="/SignUp">
+          <button>회원가입</button>
+        </Link>
+      </div>
       <div id="map" style={{ width: "100%", height: "1000px" }}></div>
       <Light></Light>
     </div>

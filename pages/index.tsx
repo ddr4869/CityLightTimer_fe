@@ -82,8 +82,8 @@ const IndexPage = () => {
 
                 const marker = new window.kakao.maps.Marker({
                   position: new window.kakao.maps.LatLng(
-                    parseFloat(location.mapCtptIntLat),
-                    parseFloat(location.mapCtptIntLot)
+                    parseFloat(location.mapCtptIntLat) * 0.0000001,
+                    parseFloat(location.mapCtptIntLot) * 0.0000001
                   ),
                   map: map,
                   image: markerImage,

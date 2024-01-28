@@ -2,7 +2,11 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-const LoginForm = ({}) => {
+interface LoginFormProps {
+  onLoginSuccess: (isSuccess: boolean) => void;
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
   const router = useRouter();
   const [username, setUsername] = useState("test");
   const [password, setPassword] = useState("test");
@@ -31,6 +35,7 @@ const LoginForm = ({}) => {
       //   // 실패 시 적절한 에러 처리를 수행
       // }
       if (username == "test" && password == "test") {
+        onLoginSuccess(true);
         console.log("로그인 성공 ");
         window.alert("로그인이 성공했습니다!");
         router.push("/");

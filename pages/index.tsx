@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import $ from "jquery";
 import Light from "./traffic_light";
 import Light_locate from "./light_locate";
@@ -15,6 +15,12 @@ declare global {
 }
 
 const IndexPage = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const handleLoginSuccess = (
+    isSuccess: boolean | ((prevState: boolean) => boolean)
+  ) => {
+    setIsLoggedIn(isSuccess);
+  };
   useEffect(() => {
     try {
       const script = document.createElement("script");
@@ -122,9 +128,15 @@ const IndexPage = () => {
         <Link href="/Bookmark">
           <button>즐겨찾기</button>
         </Link>
-        <Link href="/Login">
-          <button>로그인</button>
-        </Link>
+        <div>
+          {isLoggedIn ? (
+            // 로그인 상태일 때 로그아웃 버튼
+            <button onClick={() => setIsLoggedIn(false)}>로그아웃</button>
+          ) : (
+            // 로그아웃 상태일 때 로그인 버튼
+            <Login onLoginSuccess={(isSuccess) => setIsLoggedIn(isSuccess)} />
+          )}
+        </div>
         <Link href="/SignUp">
           <button>회원가입</button>
         </Link>

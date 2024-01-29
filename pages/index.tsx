@@ -3,6 +3,7 @@ import Light from "./traffic_light";
 import Link from "next/link";
 import Login from "./Login";
 import intersection from "../public/intersection.json";
+import { SearchModalBox, SearchModalContent } from "../styles/modalStyle";
 
 declare global {
   interface Window {
@@ -30,6 +31,13 @@ const IndexPage = () => {
 
   const closeModal = () => {
     setSelectedLocation(null);
+  };
+
+  const closeOnOverlayClick = (event: { target: { classList: { contains: (arg0: string) => any; }; }; }) => {
+    // 클릭한 엘리먼트가 모달 박스인지 확인
+    if (event.target.classList.contains("modal-overlay")) {
+      closeModal();
+    }
   };
 
   useEffect(() => {
@@ -137,9 +145,10 @@ const IndexPage = () => {
         </Link>
       </div>
       <div id="map" style={{ width: "100%", height: "1000px" }}></div>
+
       {selectedLocation !== null && (
-        <div className="modal-overlay">
-          <div className="modal">
+        <SearchModalBox onClick={closeOnOverlayClick} className="modal-overlay">
+          <SearchModalContent>
             <button onClick={closeModal} className="modal-close-btn">
               닫기
             </button>
@@ -149,8 +158,8 @@ const IndexPage = () => {
               {selectedLocation.mapCtptIntLot}
             </p>
             {/* 추가 정보를 표시할 수 있음 */}
-          </div>
-        </div>
+          </SearchModalContent>
+        </SearchModalBox>
       )}
       {/* <Light></Light> */}
     </div>

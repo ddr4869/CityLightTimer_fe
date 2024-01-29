@@ -1,11 +1,7 @@
-import { useEffect, useState } from "react";
-import $ from "jquery";
+import { SetStateAction, useEffect, useState } from "react";
 import Light from "./traffic_light";
-import Light_locate from "./light_locate";
-import styles from "./styles.module.css"; // 스타일 파일 import
 import Link from "next/link";
 import Login from "./Login";
-import LoginForm from "./Login";
 import intersection from "../public/intersection.json";
 
 declare global {
@@ -14,13 +10,28 @@ declare global {
   }
 }
 
+interface Location {
+  itstNm: string;
+  mapCtptIntLat: string;
+  mapCtptIntLot: string;
+  // 다른 필요한 속성들도 여기에 추가할 수 있습니다.
+}
+
 const IndexPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const handleLoginSuccess = (
-    isSuccess: boolean | ((prevState: boolean) => boolean)
-  ) => {
-    setIsLoggedIn(isSuccess);
+  const [selectedLocation, setSelectedLocation] = useState<Location | null>(
+    null
+  );
+
+  const openModal = (location: SetStateAction<Location | null>) => {
+    console.log("location", location);
+    setSelectedLocation(location);
   };
+
+  const closeModal = () => {
+    setSelectedLocation(null);
+  };
+
   useEffect(() => {
     try {
       const script = document.createElement("script");
@@ -30,7 +41,6 @@ const IndexPage = () => {
 
       const loadKakaoMap = () => {
         window.kakao.maps.load(() => {
-          console.log("intersection   ", intersection);
           // 위치 정보 가져오기
           if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
@@ -61,22 +71,6 @@ const IndexPage = () => {
                 infowindow.open(map, marker);
               });
 
-              const locations = [
-                {
-                  itstId: "10",
-                  itstNm: "난곡우체국앞",
-                  mapCtptIntLat: "37.47861569168731",
-                  mapCtptIntLot: "126.91473646413034",
-                },
-                {
-                  itstId: "1007",
-                  itstNm: "우리은행암사",
-                  mapCtptIntLat: "3.75547454",
-                  mapCtptIntLot: "1.271364893",
-                },
-                // ... (나머지 데이터)
-              ];
-
               intersection.forEach((location) => {
                 const markerImage = new window.kakao.maps.MarkerImage(
                   "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png", // 빨간색 마커 이미지 URL
@@ -104,6 +98,7 @@ const IndexPage = () => {
                   "click",
                   function () {
                     infowindow.open(map, marker);
+                    openModal(location);
                   }
                 );
               });
@@ -142,7 +137,22 @@ const IndexPage = () => {
         </Link>
       </div>
       <div id="map" style={{ width: "100%", height: "1000px" }}></div>
-      <Light></Light>
+      {selectedLocation !== null && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <button onClick={closeModal} className="modal-close-btn">
+              닫기
+            </button>
+            <h2>{selectedLocation.itstNm}</h2>
+            <p>
+              좌표: {selectedLocation.mapCtptIntLat},{" "}
+              {selectedLocation.mapCtptIntLot}
+            </p>
+            {/* 추가 정보를 표시할 수 있음 */}
+          </div>
+        </div>
+      )}
+      {/* <Light></Light> */}
     </div>
   );
 };

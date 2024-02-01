@@ -1,85 +1,6 @@
-// // components/LoginForm.js
-// import { useRouter } from "next/router";
-// import { useState } from "react";
-
-// interface LoginFormProps {
-//   onLoginSuccess: (isSuccess: boolean) => void;
-// }
-
-// const Bookmark = ({}) => {
-//   const router = useRouter();
-//   const [username, setUsername] = useState("test");
-//   const [password, setPassword] = useState("test");
-
-//   const handleBookmarkData = async () => {
-//     try {
-//       // 유저 id로 즐겨찾기 내역 조회
-//       const getBookmarks = await fetch("http://localhost:8088/bookmark/1", {
-//         method: "GET",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//       });
-//       console.log("response", getBookmarks);
-
-//       // 서버로부터의 응답을 확인
-//       if (getBookmarks) {
-//         const locations = [
-//           {
-//             itstId: "10",
-//             itstNm: "난곡우체국앞",
-//             mapCtptIntLat: "37.47861569168731",
-//             mapCtptIntLot: "126.91473646413034",
-//           },
-//           {
-//             itstId: "1007",
-//             itstNm: "우리은행암사",
-//             mapCtptIntLat: "3.75547454",
-//             mapCtptIntLot: "1.271364893",
-//           },
-//           // ... (나머지 데이터)
-//         ];
-
-//         return (
-//           <div>
-//             <h2>Bookmark Locations</h2>
-//             <table>
-//               <thead>
-//                 <tr>
-//                   <th>ID</th>
-//                   <th>Name</th>
-//                   <th>Latitude</th>
-//                   <th>Longitude</th>
-//                 </tr>
-//               </thead>
-//               <tbody>
-//                 {locations.map((location) => (
-//                   <tr key={location.itstId}>
-//                     <td>{location.itstId}</td>
-//                     <td>{location.itstNm}</td>
-//                     <td>{location.mapCtptIntLat}</td>
-//                     <td>{location.mapCtptIntLot}</td>
-//                   </tr>
-//                 ))}
-//               </tbody>
-//             </table>
-//           </div>
-//         );
-//         // 로그인이 성공하면 부모 컴포넌트에서 전달한 콜백 함수를 호출하여 상태를 업데이트합니다.
-//         // onLogin 함수는 부모 컴포넌트에서 전달될 예정입니다.
-//       } else {
-//         // 실패 시 적절한 에러 처리를 수행
-//       }
-//     } catch (error) {
-//       console.error("에러 발생:", error);
-//     }
-//   };
-// };
-
-// export default Bookmark;
-
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import intersection from "../public/intersection.json";
 
 interface BookmarkProps {
   itstId: string;
@@ -91,27 +12,13 @@ interface BookmarkProps {
 const Bookmark = () => {
   const router = useRouter();
   const [locations, setLocations] = useState<BookmarkProps[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10; // 한 페이지에 보여질 아이템 개수
   const handleGoBack = () => {
     router.push("/"); // 메인 페이지로 이동
   };
   useEffect(() => {
-    const testData = [
-      {
-        itstId: "10",
-        itstNm: "난곡우체국앞",
-        mapCtptIntLat: "37.47861569168731",
-        mapCtptIntLot: "126.91473646413034",
-      },
-      {
-        itstId: "1007",
-        itstNm: "우리은행암사",
-        mapCtptIntLat: "3.75547454",
-        mapCtptIntLot: "1.271364893",
-      },
-      // ... (나머지 데이터)
-    ];
-
-    setLocations(testData);
+    setLocations(intersection);
 
     // const fetchData = async () => {
     //   try {
@@ -137,31 +44,53 @@ const Bookmark = () => {
     // fetchData();
   }, []);
 
+  const indexOfLastLocation = currentPage * pageSize;
+  const indexOfFirstLocation = indexOfLastLocation - pageSize;
+  const currentLocations = locations.slice(
+    indexOfFirstLocation,
+    indexOfLastLocation
+  );
+
   return (
     <div>
       <h2>즐겨찾기</h2>
       <table style={{ borderCollapse: "collapse", width: "100%" }}>
         <thead>
           <tr>
+            <th style={tableHeaderStyle}>번호</th>
             <th style={tableHeaderStyle}>Name</th>
             <th style={tableHeaderStyle}>Latitude</th>
             <th style={tableHeaderStyle}>Longitude</th>
           </tr>
         </thead>
         <tbody>
-          {locations.map((location) => (
+          {currentLocations.map((location, index) => (
             <tr key={location.itstId}>
+              <td style={tableCellStyle}>{indexOfFirstLocation + index + 1}</td>
               <td style={tableCellStyle}>{location.itstNm}</td>
               <td style={tableCellStyle}>
-                {parseFloat(location.mapCtptIntLat)}
+                {parseFloat(location.mapCtptIntLat) * 0.0000001}
               </td>
               <td style={tableCellStyle}>
-                {parseFloat(location.mapCtptIntLot)}
+                {parseFloat(location.mapCtptIntLot) * 0.0000001}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {/* 페이지네이션 버튼 */}
+      <div style={{ marginTop: "10px" }}>
+        {Array.from(
+          { length: Math.ceil(locations.length / pageSize) },
+          (_, index) => (
+            <button key={index + 1} onClick={() => setCurrentPage(index + 1)}>
+              {index + 1}
+            </button>
+          )
+        )}
+      </div>
+
       <button onClick={handleGoBack}>나가기</button>
     </div>
   );

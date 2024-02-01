@@ -33,7 +33,9 @@ const IndexPage = () => {
     setSelectedLocation(null);
   };
 
-  const closeOnOverlayClick = (event: { target: { classList: { contains: (arg0: string) => any; }; }; }) => {
+  const closeOnOverlayClick = (event: {
+    target: { classList: { contains: (arg0: string) => any } };
+  }) => {
     // 클릭한 엘리먼트가 모달 박스인지 확인
     if (event.target.classList.contains("modal-overlay")) {
       closeModal();

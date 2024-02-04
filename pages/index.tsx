@@ -1,7 +1,11 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import $ from 'jquery';
 import Light from'./traffic_light';
+import LightTest from'./traffic_light_test';
 import Light_locate from './light_locate';
+import getIntersectionFromJson from './maplistener/intersection';
+import getNearLightTiming from './maplistener/light';
+import {getLightCoordHtml, getLatLonHtml} from './coordHtml';
 //import axios from 'axios';
 
 
@@ -9,10 +13,6 @@ const IndexPage = () => {
   useEffect(() => {
     
       try {
-        //const geojson = require('./geo.json')
-        // const response = await axios.get('./geo.json');
-        // const geojson = response.data;
-
         // 네이버 지도 API 스크립트 동적으로 로드
         const script = document.createElement('script');
         script.src = 'https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=e27tyis8vn';
@@ -29,45 +29,11 @@ const IndexPage = () => {
           };
 
           const map = new window.naver.maps.Map('map', mapOptions);
-          
-            const datas = require('/public/intersection.json')
-            datas.forEach(item => {
-              //console.log(item.itstId); // itstId 필드 출력
-              const marker = new window.naver.maps.Marker({
-                  position: new window.naver.maps.LatLng(Number(item.mapCtptIntLat*0.0000001), Number(item.mapCtptIntLot*0.0000001)),
-                  map: map,
-                  icon: {
-                    url:"light.png",
-                    size: new naver.maps.Size(500, 52),
-                    scaledSize: new naver.maps.Size(40,40),
-                    origin: new naver.maps.Point(0, 0),
-                    anchor: new naver.maps.Point(25, 26)
-                  },
-                  title: item.itstId
-                });
-                var menuLayer = $('<div style="position:absolute;z-index:10000;background-color:#fff;border:solid 1px #333;padding:10px;display:none;"></div>');
-                map.getPanes().floatPane.appendChild(menuLayer[0]);
-              
-                marker.addListener('click', function(e) {
-                  var coordHtml = "itstId: " + item.itstId + '<br />' + "y: " + item.mapCtptIntLat*0.0000001 + '<br />' + "x: " + item.mapCtptIntLot*0.0000001;
-                      // 'Coord: '+ '(우 클릭 지점 위/경도 좌표)' + '<br />' +
-                      // 'Point: ' + e.point + '<br />' +
-                      // 'Offset: ' + e.offset;
-                  
-                  menuLayer.show().css({  
-                    position: "relative",
-                    // left: marker.getPosition().x + "px", // x좌표
-                    // top: marker.getPosition().y + "px", // y좌표
-                    textAlign: "center",
-                    left: e.offset.x,
-                    top: e.offset.y,
-                    width: "500px",
-                    height: "80px",
-                    size: "15px"
-                  }).html(coordHtml);
-                  
-              });
-          });
+          var markers : Array<naver.maps.Marker> = [];
+          // json에서 교차로 정보를 가져와서 지도에 표시
+          getIntersectionFromJson(map);
+          // 교차로 주변 신호등 정보를 가져와서 지도에 표시
+          getNearLightTiming(map, markers)
 
         };
 

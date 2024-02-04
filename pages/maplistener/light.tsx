@@ -23,7 +23,6 @@ function getNearLightTiming(map: naver.maps.Map, markers: Array<naver.maps.Marke
             // if data is empty, add warning message marker
             if (data["data"].length == 0) {
               var marker = new window.naver.maps.Marker({
-                animation: window.naver.maps.Animation.BOUNCE,
                 position: e.coord,
                 cursor: "pointer",
                 map: map,
@@ -46,14 +45,13 @@ function getNearLightTiming(map: naver.maps.Map, markers: Array<naver.maps.Marke
 
             for (var i = 0; i < data["data"].length; i++) {
               var marker = new window.naver.maps.Marker({
-                animation: window.naver.maps.Animation.BOUNCE,
                 position: new window.naver.maps.LatLng(Number(data["data"][i]["latitude"]), Number(data["data"][i]["longitude"])),
                 map: map,
                 title: data["data"][i]["itstId"],
                 icon: {
                   url:"signal2.png",
                   size: new naver.maps.Size(500, 52),
-                  scaledSize: new naver.maps.Size(15,15),
+                  scaledSize: new naver.maps.Size(25,25),
                   origin: new naver.maps.Point(0, 0),
                   anchor: new naver.maps.Point(25, 26)
                 },

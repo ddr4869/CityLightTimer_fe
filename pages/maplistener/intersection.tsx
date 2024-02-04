@@ -7,7 +7,6 @@ function getIntersectionFromJson(map: naver.maps.Map) {
       const marker = new window.naver.maps.Marker({
           position: new window.naver.maps.LatLng(Number(item.mapCtptIntLat*0.0000001), Number(item.mapCtptIntLot*0.0000001)),
           map: map,
-          clickable: true,
           icon: {
             url:"light2.jpeg",
             size: new naver.maps.Size(400, 52),

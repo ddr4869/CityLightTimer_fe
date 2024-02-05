@@ -100,7 +100,7 @@ function markerListener(map: naver.maps.Map, marker: naver.maps.Marker,  markers
                   break;
                 } 
                 content += `<p>${k}: ${v}</p>`;
-              }
+              } 
               content += '</div>';
               infowindow.setContent(content);
               infowindow.open(map, marker);

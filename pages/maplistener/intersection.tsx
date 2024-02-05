@@ -1,5 +1,6 @@
 import $ from 'jquery';
-import {getLightCoordHtml} from '../coordHtml';
+import {getLightCoordHtml, getLightTimerCoordHtml} from '../coordHtml';
+import Test from '../test';
 
 function getIntersectionFromJson(map: naver.maps.Map) {
     const datas = require('/public/intersection.json')
@@ -32,17 +33,22 @@ function getIntersectionFromJson(map: naver.maps.Map) {
               success: function(resp) {
                 // 성공적으로 응답 받았을 때의 처리
                 var data = JSON.parse(resp);
-                var coordHtml = getLightCoordHtml(data, item.itstNm);
-                var infowindow = new naver.maps.InfoWindow({
-                  content: coordHtml
-                  //content: data
-              });
-                if (infowindow.getMap()) {
-                  infowindow.close();
-              } else {
+                    var timer1 = Math.trunc(data["data"][0]["etLtsgRmdrCs"]/10);
+                    console.log("timer1: " + timer1)
+                    var infowindow = new naver.maps.InfoWindow({
+                      content: "Loading..."
+                      //content: data
+                    });
                   infowindow.open(map, marker);
-              }
-  
+                    // 타이머 설정
+                    var interval = setInterval(function() {
+                      infowindow.setContent(`<div><p>Countdown: ${timer1}</p></div>`);
+                      infowindow.open(map, marker);
+                      timer1--;
+                      if (timer1 == 0 ) {
+                        clearInterval(interval);
+                      }
+                }, 1000);
               },
               error: function(error) {
                 // 에러 발생 시의 처리

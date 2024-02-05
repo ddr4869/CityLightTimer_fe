@@ -1,4 +1,4 @@
-import {getLightCoordHtml, getLatLonHtml} from '../coordHtml';
+import {getLightCoordHtml, getLatLonHtml, getLightTimerCoordHtml} from '../coordHtml';
 import * as $ from 'jquery';
 function getNearLightTiming(map: naver.maps.Map, markers: Array<naver.maps.Marker>) {
     map.addListener('click', function(e) {
@@ -75,6 +75,7 @@ function getNearLightTiming(map: naver.maps.Map, markers: Array<naver.maps.Marke
                   success: function(resp) {
                     // 성공적으로 응답 받았을 때의 처리
                     var data = JSON.parse(resp);
+
                     var coordHtml = getLightCoordHtml(data, markerData.itstNm);
                     var infowindow = new naver.maps.InfoWindow({
                       content: coordHtml

@@ -1,6 +1,6 @@
-import exp from "constants";
 
 export function getLightCoordHtml(data: any, itstNm: string) {
+
     var coordHtml = 
     '<div style="width:150px;text-align:center;padding:10px;">' +
     "<p>" + 
@@ -28,7 +28,7 @@ export function getLightCoordHtml(data: any, itstNm: string) {
     (data["data"][0]["wtUtsgRmdrCs"] == null ? "" : "서쪽유턴신호: " + data["data"][0]["wtUtsgRmdrCs"] + '<br />') +
     "</p>" + '</div>' ;
     return coordHtml;
-  }
+}
 
 export function getLatLonHtml(data: any) {
   var coordHtml = '<div class="iw_inner">';
@@ -45,5 +45,18 @@ export function getLatLonHtml(data: any) {
     }
   }
   coordHtml += '</div>';
+  return coordHtml;
+}
+
+export function getLightTimerCoordHtml(timers: any) {
+  var coordHtml =   '<div style="width:150px;text-align:center;padding:10px;">' +
+  // show timers in html
+  "<p>" +
+  "동쪽좌회전신호: " + timers[0] + '<br />' +
+  "동쪽보행신호: " + timers[1] + '<br />' +
+  "동쪽직진신호: " + timers[2] + '<br />' +
+  "동쪽유턴신호: " + timers[3] + '<br />' +
+  '</p>' +
+  '</div>';
   return coordHtml;
 }

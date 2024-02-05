@@ -8,8 +8,6 @@ let interval = null;
 let infowindow: naver.maps.InfoWindow;
 
 function getIntersectionFromJson(map: naver.maps.Map) {
-
-
     const datas = require('/public/intersection.json')
     datas.forEach(item => {
       const marker = new window.naver.maps.Marker({
@@ -28,12 +26,6 @@ function getIntersectionFromJson(map: naver.maps.Map) {
         map.getPanes().floatPane.appendChild(menuLayer[0]);
         var markers: Array<naver.maps.Marker> = [];
         marker.addListener('click', function(markerData) {
-          // if marker is visible, then close it
-          if (markers.length > 0) {
-            markers.forEach(m => m.setVisible(false));
-            markers = [];
-            return;
-          }
           console.log("interval ", interval);
           if (interval !== null) {
             stopIntervals();
@@ -44,14 +36,14 @@ function getIntersectionFromJson(map: naver.maps.Map) {
             });
             infowindow.open(map, marker);
 
-            markerListener(map, marker, markers, item.itstId);
+            markerListener(map, marker, markers, item.itstId, item.itstNm);
           }
         });
   }); // data end
 }
 
 
-function markerListener(map: naver.maps.Map, marker: naver.maps.Marker,  markers: Array<naver.maps.Marker>,  itstId: string) {
+function markerListener(map: naver.maps.Map, marker: naver.maps.Marker,  markers: Array<naver.maps.Marker>,  itstId: string, itstNm: string) {
   if (interval !== null) {
     stopIntervals();
   }
@@ -83,17 +75,28 @@ function markerListener(map: naver.maps.Map, marker: naver.maps.Marker,  markers
               timers.push(Math.trunc(timersValue[keys[i]] / 10));
             }
           }
+
+          if (timerkeys.length === 0) {
+            infowindow.setContent("<h3>No data</h3>");
+            infowindow.open(map, marker);
+            console.log("No data");
+            setTimeout(function() {
+              infowindow.close();
+            }, 3000);
+            return;
+          }
+
            // 타이머 설정
             interval = setInterval(function() {
               // 각각의 타이머를 1씩 감소
-              let content = '<div>';
+              let content = '<div><h3>' + itstNm + '</h3>';
               for (let i = 0; i < timerkeys.length; i++) {
                 var k= timerkeys[i];
                 var v= timers[i];
                 timers[i]-=1;
                 if (timers[i] < 0 ) {
                   clearInterval(interval); // 현재 타이머 중지
-                  markerListener(map, marker, markers, itstId);
+                  markerListener(map, marker, markers, itstId, itstNm);
                   break;
                 }
                 content += `<p>${k}: ${v}</p>`;

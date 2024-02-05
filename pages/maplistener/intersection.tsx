@@ -98,7 +98,7 @@ function markerListener(map: naver.maps.Map, marker: naver.maps.Marker,  markers
                   clearInterval(interval); // 현재 타이머 중지
                   markerListener(map, marker, markers, itstId, itstNm);
                   break;
-                }
+                } 
                 content += `<p>${k}: ${v}</p>`;
               }
               content += '</div>';

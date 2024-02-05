@@ -5,8 +5,11 @@ import Light_information_timer from '../light_information';
 import { time } from 'console';
 
 let interval = null;
+let infowindow: naver.maps.InfoWindow;
 
 function getIntersectionFromJson(map: naver.maps.Map) {
+
+
     const datas = require('/public/intersection.json')
     datas.forEach(item => {
       const marker = new window.naver.maps.Marker({
@@ -25,18 +28,30 @@ function getIntersectionFromJson(map: naver.maps.Map) {
         map.getPanes().floatPane.appendChild(menuLayer[0]);
         var markers: Array<naver.maps.Marker> = [];
         marker.addListener('click', function(markerData) {
-          
-          markerListener(map, marker, markers, item.itstId);
+          // if marker is visible, then close it
+          if (markers.length > 0) {
+            markers.forEach(m => m.setVisible(false));
+            markers = [];
+            return;
+          }
+          console.log("interval ", interval);
+          if (interval !== null) {
+            stopIntervals();
+            infowindow.close();
+          } else {
+            infowindow = new window.naver.maps.InfoWindow({
+              content: "Loading..."
+            });
+            infowindow.open(map, marker);
+
+            markerListener(map, marker, markers, item.itstId);
+          }
         });
   }); // data end
 }
 
 
 function markerListener(map: naver.maps.Map, marker: naver.maps.Marker,  markers: Array<naver.maps.Marker>,  itstId: string) {
-  // 마커가 있을 경우, map의 모든 마커 삭제
-  // for (var i = 0; i < markers.length; i++) {
-  //     markers[i].setMap(null);
-  // }
   if (interval !== null) {
     stopIntervals();
   }
@@ -54,16 +69,12 @@ function markerListener(map: naver.maps.Map, marker: naver.maps.Marker,  markers
         // 성공적으로 응답 받았을 때의 처리
           var data = JSON.parse(resp);
 
-          var infowindow = new naver.maps.InfoWindow({
-            content: "Loading..."
-          });
           infowindow.open(map, marker);
           markers.push(marker);
           // every timers, set counter with there value
           var timers:Array<number> = [];
           var timerkeys:Array<string> = [];
           const timersValue = Light_information_timer(data);
-          console.log("timersValue: ", timersValue);
           const keys = Object.keys(timersValue);
 
           for (let i = 0; i < keys.length; i++) {
@@ -72,17 +83,13 @@ function markerListener(map: naver.maps.Map, marker: naver.maps.Marker,  markers
               timers.push(Math.trunc(timersValue[keys[i]] / 10));
             }
           }
-          console.log("timerkeys length: ", timerkeys.length);
-          console.log("timers: ", timers);
-
-            // 타이머 설정
+           // 타이머 설정
             interval = setInterval(function() {
               // 각각의 타이머를 1씩 감소
               let content = '<div>';
               for (let i = 0; i < timerkeys.length; i++) {
                 var k= timerkeys[i];
                 var v= timers[i];
-                console.log("v: ", v);
                 timers[i]-=1;
                 if (timers[i] < 0 ) {
                   clearInterval(interval); // 현재 타이머 중지
@@ -94,7 +101,6 @@ function markerListener(map: naver.maps.Map, marker: naver.maps.Marker,  markers
               content += '</div>';
               infowindow.setContent(content);
               infowindow.open(map, marker);
-              
         }, 1000);
       },
       error: function(error) {

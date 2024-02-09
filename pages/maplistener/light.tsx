@@ -14,7 +14,6 @@ function getNearLightTiming(map: naver.maps.Map, markers: Array<naver.maps.Marke
         }
         markers = [];
         var center = map.getCenter();
-
         $.ajax({
           url: 'http://localhost:8080/api/intersection/list/neighbor', // 요청 보낼 URL
           type: 'GET', // HTTP 메소드
@@ -61,7 +60,6 @@ function getNearLightTiming(map: naver.maps.Map, markers: Array<naver.maps.Marke
           }
         });
       });
-
 }
 
 function createNoDataMarker(map:naver.maps.Map, latitude:number, longitude:number) {

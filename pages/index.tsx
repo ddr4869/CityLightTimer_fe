@@ -7,7 +7,7 @@ import {getIntersectionFromJson} from "./maplistener/intersection";
 import getIntersectionFromJsonTest from "./maplistener/testIntersection";
 import getNearLightTiming from "./maplistener/light";
 import { getLightCoordHtml, getLatLonHtml } from "./coordHtml";
-import {getLocation, LATITUDE, LONGITUDE} from "./geolocation";
+import {LATITUDE, LONGITUDE, getLocation, getGangnamLocation, getCityHallLocation, getYeouidoLocation, getSangamLocation} from "./geolocation";
 import Test from "./test";
 //import axios from 'axios';
 // 현재 위치를 가져오는 함수
@@ -16,6 +16,8 @@ import Test from "./test";
 const IndexPage = () => {
   //Test();
   const [showNearLight, setShowNearLight] = useState(false);
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
 
   // 첫 번째 버튼을 클릭할 때 실행되는 함수
   const handleButtonAllLights = () => {
@@ -27,30 +29,69 @@ const IndexPage = () => {
     setShowNearLight(false); // 버튼 1을 활성화
   };
 
+  const handleButtonCurrentLocation = () => {
+    var coord:number[] | undefined =  getLocation();
+    checkLocation(coord);
+  }
+
+  const handleButtonGangnamLocation = () => {
+    var coord:number[] | undefined = getGangnamLocation();
+    checkLocation(coord);
+  }
+
+  const handleButtonCityHallLocation = () => {
+    var coord:number[] | undefined = getCityHallLocation();
+    checkLocation(coord);
+  }
+
+  const handleButtonYeouidoLocation = () => {
+    var coord:number[] | undefined = getYeouidoLocation();
+    checkLocation(coord);
+  }
+
+  const handleButtonSangamLocation = () => {
+    var coord:number[] | undefined = getSangamLocation();
+    checkLocation(coord);
+  }
+
+  const checkLocation = (coord:number[] | undefined) => {
+    if (coord !== undefined) {
+      setLatitude(coord[0]);
+      setLongitude(coord[1]);
+    } else
+      setLatitude(37.5);
+      setLongitude(127.05);
+  }
+
   var script
+  
   useEffect(() => {
     try {
-      getLocation();
       // 네이버 지도 API 스크립트 동적으로 로드
       script = document.createElement("script");
       script.src =
         "https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=e27tyis8vn";
       script.async = true;
       document.head.appendChild(script);
-      loadScript(script);
+      loadScript(script, LATITUDE, LONGITUDE);
 
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  }, [showNearLight]);
+  }, [showNearLight, latitude, longitude]);
 
-  function loadScript(script: any) {
+  function loadScript(script: any, latitude: number, longitude: number) {
+    console.log("latitude: ", latitude, "longitude: ", longitude)
+    if (latitude === undefined && longitude === undefined) {
+      latitude = 37.5;
+      longitude = 127.05;
+    }
     script.onload = () => {
       // 네이버 지도 초기화 및 표시
       console.log(LATITUDE, LONGITUDE);
       const mapOptions = {
         //center: new window.naver.maps.LatLng(LATITUDE, LONGITUDE),
-        center: new window.naver.maps.LatLng(37.5, 127.05),
+        center: new window.naver.maps.LatLng(latitude, longitude),
         zoom: 15,
       };
         const map = new window.naver.maps.Map("map", mapOptions);
@@ -66,13 +107,19 @@ const IndexPage = () => {
       }
   };
 
+
   return (
     <div className="container">
       <h2 className="title">신호등 검색기</h2>
       <button className="button" onClick={handleButtonAllLights}>주위 신호등만 표시</button>
       <button className="button" onClick={handleButtonNearLights}>전체 신호등 표시</button>
-      <p></p>
-      <div id="map" className="map-container">p</div>
+      <br></br><br></br>
+      <button className="button" onClick={handleButtonCurrentLocation}>현재 위치</button>
+      <button className="button" onClick={handleButtonGangnamLocation}>강남</button>
+      <button className="button" onClick={handleButtonCityHallLocation}>시청</button>
+      <button className="button" onClick={handleButtonYeouidoLocation}>여의도</button>
+      <button className="button" onClick={handleButtonSangamLocation}>상암</button>
+      <div id="map" className="map-container"></div>
     </div>
   );
 };
@@ -80,3 +127,4 @@ export default function Page() {
   return <IndexPage />;
   //return <h1>Hello, Next.js!</h1>
 }
+

@@ -67,4 +67,4 @@ function Light_information_timer(data: any): Light_information {
 //     return lightInfo;
 // }
 
-export default Light_information_timer;
+export {Light_information, Light_information_timer};

@@ -1,102 +1,59 @@
 import {getLightCoordHtml, getLatLonHtml, getLightTimerCoordHtml} from '../coordHtml';
+import {markerListener, stopIntervals, resetInfowindow, createLightMarker, infowindow} from './intersection';
 import * as $ from 'jquery';
-function getNearLightTiming(map: naver.maps.Map, markers: Array<naver.maps.Marker>) {
-    map.addListener('click', function(e) {
 
-        // 마커가 있을 경우, map의 모든 마커 삭제
+let interval:NodeJS.Timeout = null;
+
+
+function getNearLightTiming(map: naver.maps.Map, markers: Array<naver.maps.Marker>) {
+
+  // if map is moved, and return location of middle of the map
+    map.addListener('dragend', function(e) {
         for (var i = 0; i < markers.length; i++) {
           markers[i].setMap(null);
         }
         markers = [];
+        var center = map.getCenter();
 
         $.ajax({
           url: 'http://localhost:8080/api/intersection/list/neighbor', // 요청 보낼 URL
           type: 'GET', // HTTP 메소드
           dataType: 'text', // 응답 데이터 타입
           data: {
-            latitude: e.coord.lat(),
-            longitude: e.coord.lng(),
+            latitude: center.y,
+            longitude: center.x,
             distance: 1000
           },
           success: function(resp) {
-            var data = JSON.parse(resp);
+            var datas = JSON.parse(resp);
             // if data is empty, add warning message marker
-            if (data["data"].length == 0) {
-              var marker = new window.naver.maps.Marker({
-                position: e.coord,
-                cursor: "pointer",
-                map: map,
-                title: "No data",
-                icon: {
-                  url:"no_data.png",
-                  size: new naver.maps.Size(500, 500),
-                  scaledSize: new naver.maps.Size(150,150),
-                  origin: new naver.maps.Point(0, 0),
-                  anchor: new naver.maps.Point(25, 26),
-                  
-                },
-              });
-              setTimeout(function() {
-                marker.setMap(null);
-              }, 3000);
+            if (datas["data"].length == 0) {
+              createNoDataMarker(map,center.y, center.x);
             }
       
-            var coordHtml = getLatLonHtml(data);
-
-            for (var i = 0; i < data["data"].length; i++) {
-              var marker = new window.naver.maps.Marker({
-                position: new window.naver.maps.LatLng(Number(data["data"][i]["latitude"]), Number(data["data"][i]["longitude"])),
-                map: map,
-                title: data["data"][i]["itstId"],
-                icon: {
-                  url:"signal2.png",
-                  size: new naver.maps.Size(500, 52),
-                  scaledSize: new naver.maps.Size(25,25),
-                  origin: new naver.maps.Point(0, 0),
-                  anchor: new naver.maps.Point(25, 26)
-                },
+            const data = datas["data"]
+            data.forEach(item => {
+              const marker: naver.maps.Marker = createLightMarker(
+                map,
+                item.itstId,
+                item.latitude,
+                item.longitude
+              );
+              markers.push(marker);
+                marker.addListener('click', function(markerData) {
+                  console.log("interval ", interval);
+                  if (interval !== null) {
+                    stopIntervals();
+                    infowindow.close();
+                  } else {
+                    resetInfowindow();
+                  infowindow.open(map, marker);
+        
+                  markerListener(map, marker, markers, item.itstNm);
+                }
               });
-              markers.push(marker)
-              
-              var menuLayer = $('<div style="position:absolute;z-index:10000;background-color:#fff;border:solid 1px #333;padding:10px;display:none;"></div>');
-              map.getPanes().floatPane.appendChild(menuLayer[0]);
-
-              marker.addListener('click', (function (markerData) {
-                return function (e) {
-                            $.ajax({
-                  url: 'http://localhost:8080/api/light', 
-                  type: 'GET', // HTTP 메소드
-                  dataType: 'text', // 응답 데이터 타입
-                  data: {
-                    itstId: markerData.itstId,
-                    pageNo: '1',
-                    numOfRows: '1'
-                  },
-                  success: function(resp) {
-                    // 성공적으로 응답 받았을 때의 처리
-                    var data = JSON.parse(resp);
-
-                    var coordHtml = getLightCoordHtml(data, markerData.itstNm);
-                    var infowindow = new naver.maps.InfoWindow({
-                      content: coordHtml
-                      //content: data
-                  });
-                      if (infowindow.getMap()) {
-                        infowindow.close();
-                    } else {
-                        infowindow.open(map, new window.naver.maps.LatLng(markerData.latitude, markerData.longitude));
-                    }
-                  },
-                  error: function(error) {
-                    // 에러 발생 시의 처리
-                    console.error('Error during Ajax request:', error);
-                  }
-                });
-
-                };
-            })(data["data"][i]));  // 클로저를 사용하여 데이터 전달
-            }
-
+          }); // data end
+            
           },
           error: function(error) {
             // 에러 발생 시의 처리
@@ -105,6 +62,26 @@ function getNearLightTiming(map: naver.maps.Map, markers: Array<naver.maps.Marke
         });
       });
 
+}
+
+function createNoDataMarker(map:naver.maps.Map, latitude:number, longitude:number) {
+  var marker = new window.naver.maps.Marker({
+    position: new window.naver.maps.LatLng(latitude, longitude),
+    cursor: "pointer",
+    map: map,
+    title: "No data",
+    icon: {
+      url:"no_data.png",
+      size: new naver.maps.Size(500, 500),
+      scaledSize: new naver.maps.Size(150,150),
+      origin: new naver.maps.Point(0, 0),
+      anchor: new naver.maps.Point(25, 26),
+      
+    },
+  });
+  setTimeout(function() {
+    marker.setMap(null);
+  }, 1800);
 }
 
 export default getNearLightTiming;

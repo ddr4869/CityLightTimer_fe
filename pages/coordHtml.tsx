@@ -30,33 +30,3 @@ export function getLightCoordHtml(data: any, itstNm: string) {
     return coordHtml;
 }
 
-export function getLatLonHtml(data: any) {
-  var coordHtml = '<div class="iw_inner">';
-  if (data["data"].length == 0) {
-    coordHtml += "<h3>No data</h3>";
-  } else {
-    for (var i = 0; i < data["data"].length; i++) {
-      coordHtml += "<h3>itstId: " + data["data"][i]["itstId"] + '</h3>' + 
-      "<p>" + 
-      " itstNm: " + data["data"][i]["itstNm"] + '<br />' +
-      " latitude: " + data["data"][i]["latitude"] + '<br />' + 
-      " longitude: " + data["data"][i]["longitude"] + '<br />' +
-      '</p>';
-    }
-  }
-  coordHtml += '</div>';
-  return coordHtml;
-}
-
-export function getLightTimerCoordHtml(timers: any) {
-  var coordHtml =   '<div style="width:150px;text-align:center;padding:10px;">' +
-  // show timers in html
-  "<p>" +
-  "동쪽좌회전신호: " + timers[0] + '<br />' +
-  "동쪽보행신호: " + timers[1] + '<br />' +
-  "동쪽직진신호: " + timers[2] + '<br />' +
-  "동쪽유턴신호: " + timers[3] + '<br />' +
-  '</p>' +
-  '</div>';
-  return coordHtml;
-}

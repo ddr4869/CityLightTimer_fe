@@ -1,4 +1,4 @@
-import {getLightCoordHtml, getLatLonHtml, getLightTimerCoordHtml} from '../coordHtml';
+import {getLightCoordHtml} from '../coordHtml';
 import {markerListener, stopIntervals, resetInfowindow, createLightMarker, infowindow} from './intersection';
 import * as $ from 'jquery';
 

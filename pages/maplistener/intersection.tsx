@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import {getLightCoordHtml, getLightTimerCoordHtml} from '../coordHtml';
+import {getLightCoordHtml} from '../coordHtml';
 import Test from '../test';
 import {Light_information,Light_information_timer} from '../light_information';
 import { time } from 'console';

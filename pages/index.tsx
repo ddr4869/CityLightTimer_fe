@@ -8,6 +8,7 @@ import getIntersectionFromJsonTest from "./maplistener/testIntersection";
 import getNearLightTiming from "./maplistener/light";
 import { getLightCoordHtml, getLatLonHtml } from "./coordHtml";
 import {LATITUDE, LONGITUDE, getLocation, getGangnamLocation, getCityHallLocation, getYeouidoLocation, getSangamLocation} from "./geolocation";
+import addMapTrafficLayer from "./map_option";
 import Test from "./test";
 //import axios from 'axios';
 // 현재 위치를 가져오는 함수
@@ -93,8 +94,13 @@ const IndexPage = () => {
         //center: new window.naver.maps.LatLng(LATITUDE, LONGITUDE),
         center: new window.naver.maps.LatLng(latitude, longitude),
         zoom: 15,
+        mapTypeControl: true,
+        mapTypeControlOptions: {
+            style: naver.maps.MapTypeControlStyle.DROPDOWN
+        }
       };
         const map = new window.naver.maps.Map("map", mapOptions);
+        addMapTrafficLayer(map);
         var markers: Array<naver.maps.Marker> = [];
         if (!showNearLight) {
           console.log("total")
@@ -127,4 +133,3 @@ export default function Page() {
   return <IndexPage />;
   //return <h1>Hello, Next.js!</h1>
 }
-

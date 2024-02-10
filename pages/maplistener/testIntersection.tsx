@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import {getLightCoordHtml, getLightTimerCoordHtml} from '../coordHtml';
+import {getLightCoordHtml} from '../coordHtml';
 import Test from '../test';
 import {useState} from 'react';
 

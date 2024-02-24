@@ -1,15 +1,8 @@
 import { useState, useEffect } from "react";
-import $ from "jquery";
-import Light from "./traffic_light";
-import LightTest from "./traffic_light_test";
-import Light_locate from "./light_locate";
 import {getIntersectionFromJson} from "./maplistener/intersection";
-import getIntersectionFromJsonTest from "./maplistener/testIntersection";
 import getNearLightTiming from "./maplistener/light";
-import { getLightCoordHtml, getLatLonHtml } from "./coordHtml";
 import {LATITUDE, LONGITUDE, getLocation, getGangnamLocation, getCityHallLocation, getYeouidoLocation, getSangamLocation} from "./geolocation";
 import addMapTrafficLayer from "./map_option";
-import Test from "./test";
 //import axios from 'axios';
 // 현재 위치를 가져오는 함수
 

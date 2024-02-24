@@ -4,6 +4,11 @@
     position: relative;
     text-align: center;
   }
+
+  .span {
+    display: flex; /* 아이템들을 가로로 나란히 정렬하기 위해 flexbox 사용 */
+    justify-content: flex-start; /* 아이템들을 왼쪽으로 정렬 */
+  }
   
   .title {
     margin-bottom: 10px;

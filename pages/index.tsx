@@ -116,6 +116,11 @@ const IndexPage = () => {
 
   return (
     <div className="container">
+      <span className="span">
+      <button className="button" onClick={handleButtonAllLights}>회원가입</button>
+      <button className="button" onClick={handleButtonAllLights}>로그인</button>
+      <button className="button" onClick={handleButtonAllLights}>즐겨찾기</button>
+      </span>
       <h2 className="title">신호등 검색기</h2>
       <button className="button" onClick={handleButtonAllLights}>주위 신호등만 표시</button>
       <button className="button" onClick={handleButtonNearLights}>전체 신호등 표시</button>

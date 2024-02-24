@@ -117,7 +117,9 @@ const IndexPage = () => {
   return (
     <div className="container">
       <span className="span">
-        <button>회원가입</button>
+        <Link href="/SignUp">
+          <button>회원가입</button>
+        </Link>
         <button>로그인</button>
         <Link href="/Bookmark">
           <button>즐겨찾기</button>

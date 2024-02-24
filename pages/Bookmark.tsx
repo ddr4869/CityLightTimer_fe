@@ -14,35 +14,42 @@ const Bookmark = () => {
   const [locations, setLocations] = useState<BookmarkProps[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10; // 한 페이지에 보여질 아이템 개수
+  const maxPageButtons = 10; // 최대 페이지 버튼 개수
+  const totalPages = Math.ceil(locations.length / pageSize);
+
+  useEffect(() => {
+    setLocations(intersection);
+  }, []);
+
   const handleGoBack = () => {
     router.push("/"); // 메인 페이지로 이동
   };
-  useEffect(() => {
-    setLocations(intersection);
 
-    // const fetchData = async () => {
-    //   try {
-    //     const response = await fetch("http://localhost:8088/bookmark/1", {
-    //       method: "GET",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //     });
+  const goToPage = (page: number) => {
+    setCurrentPage(page);
+  };
 
-    //     if (response.ok) {
-    //       const data = await response.json();
-    //       setLocations(data);
-    //     } else {
-    //       // 실패 시 적절한 에러 처리를 수행
-    //       console.error("에러 발생:", response.statusText);
-    //     }
-    //   } catch (error) {
-    //     console.error("에러 발생:", error);
-    //   }
-    // };
+  const renderPaginationButtons = () => {
+    const buttons = [];
 
-    // fetchData();
-  }, []);
+    const startPage = Math.max(1, currentPage - Math.floor(maxPageButtons / 2));
+    const endPage = Math.min(totalPages, startPage + maxPageButtons - 1);
+
+    for (let i = startPage; i <= endPage; i++) {
+      buttons.push(
+        <button
+          key={i}
+          onClick={() => goToPage(i)}
+          style={{ margin: "0 5px" }} // 수정된 부분
+          disabled={i === currentPage}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    return buttons;
+  };
 
   const indexOfLastLocation = currentPage * pageSize;
   const indexOfFirstLocation = indexOfLastLocation - pageSize;
@@ -80,18 +87,18 @@ const Bookmark = () => {
       </table>
 
       {/* 페이지네이션 버튼 */}
-      <div style={{ marginTop: "10px" }}>
-        {Array.from(
-          { length: Math.ceil(locations.length / pageSize) },
-          (_, index) => (
-            <button key={index + 1} onClick={() => setCurrentPage(index + 1)}>
-              {index + 1}
-            </button>
-          )
+      <div className="container">
+        {currentPage > 1 && (
+          <button onClick={() => goToPage(currentPage - 1)}>이전</button>
         )}
+        {renderPaginationButtons()}
+        {currentPage < totalPages && (
+          <button onClick={() => goToPage(currentPage + 1)}>다음</button>
+        )}
+        <br></br>
+        <br></br>
+        <button onClick={handleGoBack}>나가기</button>
       </div>
-
-      <button onClick={handleGoBack}>나가기</button>
     </div>
   );
 };

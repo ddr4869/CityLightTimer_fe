@@ -18,8 +18,22 @@ const Bookmark = () => {
   const totalPages = Math.ceil(locations.length / pageSize);
 
   useEffect(() => {
-    setLocations(intersection);
-  }, []);
+    loadLocations();
+  }, []); // 페이지가 처음 로드될 때만 실행되도록 설정
+
+  const loadLocations = () => {
+    // 여기에서 즐겨찾기 목록을 다시 불러오는 로직을 추가합니다.
+    setLocations(intersection); // 임시로 intersection.json 파일에서 목록을 불러온다고 가정합니다.
+  };
+
+  const deleteBookmark = () => {
+    /**
+     * 삭제요청 보냄
+     * todo
+     */
+    alert("삭제되었습니다.");
+    loadLocations(); // 삭제 후에 목록을 다시 불러옴
+  };
 
   const handleGoBack = () => {
     router.push("/"); // 메인 페이지로 이동
@@ -83,7 +97,7 @@ const Bookmark = () => {
                 {parseFloat(location.mapCtptIntLot) * 0.0000001}
               </td>
               <td style={tableCellStyle}>
-                <button>삭제</button>
+                <button onClick={deleteBookmark}>삭제</button>
               </td>
             </tr>
           ))}

@@ -1,6 +1,6 @@
 import $ from "jquery";
 import { getLightCoordHtml } from "../coordHtml";
-import Test from "../test";
+import Test from "../../test/test";
 import {
   Light_information,
   Light_information_timer,

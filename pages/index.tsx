@@ -70,6 +70,11 @@ const IndexPage = () => {
     }
   };
 
+  const handleRefreshMap = () => {
+    alert("새로고침 완료");
+    loadMap();
+  };
+
   const checkLocation = (coord: number[] | undefined) => {
     if (coord !== undefined) {
       setLatitude(coord[0]);
@@ -86,6 +91,10 @@ const IndexPage = () => {
   let script;
 
   useEffect(() => {
+    loadMap();
+  }, [showNearLight, latitude, longitude]);
+
+  const loadMap = () => {
     try {
       // 네이버 지도 API 스크립트 동적으로 로드
       script = document.createElement("script");
@@ -97,7 +106,7 @@ const IndexPage = () => {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  }, [showNearLight, latitude, longitude]);
+  };
 
   function loadScript(script: any, latitude: number, longitude: number) {
     console.log("latitude: ", latitude, "longitude: ", longitude);
@@ -150,6 +159,7 @@ const IndexPage = () => {
         <Link href={isLoggedIn ? "/Bookmark" : "#"}>
           <button onClick={handleBookmarkClick}>즐겨찾기</button>
         </Link>
+        <button onClick={handleRefreshMap}>새로고침</button>
       </span>
       <h2 className="title">신호등 검색기</h2>
       <button className="button" onClick={handleButtonAllLights}>

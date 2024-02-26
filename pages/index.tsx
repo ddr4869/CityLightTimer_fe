@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { getIntersectionFromJson } from "./maplistener/intersection";
 import getNearLightTiming from "./maplistener/light";
-import { isLoginState } from "./states";
+import { isLoginState } from "../states";
 import { useRecoilState } from "recoil";
 import {
   LATITUDE,
@@ -58,6 +58,16 @@ const IndexPage = () => {
   const handleButtonSangamLocation = () => {
     var coord: number[] | undefined = getSangamLocation();
     checkLocation(coord);
+  };
+
+  const handleBookmarkClick = () => {
+    if (isLoggedIn) {
+      // 로그인 상태일 때 즐겨찾기 페이지로 이동
+      // 여기에 즐겨찾기 페이지로 이동하는 로직 추가
+    } else {
+      // 로그인 상태가 아닐 때 알림 창 표시
+      alert("로그인이 필요합니다!");
+    }
   };
 
   const checkLocation = (coord: number[] | undefined) => {
@@ -137,8 +147,8 @@ const IndexPage = () => {
           </Link>
         )}
 
-        <Link href="/Bookmark">
-          <button>즐겨찾기</button>
+        <Link href={isLoggedIn ? "/Bookmark" : "#"}>
+          <button onClick={handleBookmarkClick}>즐겨찾기</button>
         </Link>
       </span>
       <h2 className="title">신호등 검색기</h2>

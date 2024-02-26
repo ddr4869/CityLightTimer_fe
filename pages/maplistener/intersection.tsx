@@ -47,13 +47,7 @@ function createLightMarker(
   const marker = new window.naver.maps.Marker({
     position: new window.naver.maps.LatLng(latitude, longitude),
     map: map,
-    icon: {
-      url: "light2.jpeg",
-      size: new naver.maps.Size(400, 52),
-      scaledSize: new naver.maps.Size(30, 30),
-      origin: new naver.maps.Point(0, 0),
-      anchor: new naver.maps.Point(25, 26),
-    },
+
     title: itstId,
   });
   var menuLayer = $(

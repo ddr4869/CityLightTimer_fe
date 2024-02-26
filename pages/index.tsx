@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { getIntersectionFromJson } from "./maplistener/intersection";
 import getNearLightTiming from "./maplistener/light";
+import { isLoginState } from "./states";
+import { useRecoilState } from "recoil";
 import {
   LATITUDE,
   LONGITUDE,
@@ -18,7 +20,7 @@ import Login from "./Login";
 
 const IndexPage = () => {
   //Test();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoginState);
   const [showNearLight, setShowNearLight] = useState(false);
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
@@ -66,7 +68,12 @@ const IndexPage = () => {
     setLongitude(127.05);
   };
 
-  var script;
+  const handleLogOutSuccess = () => {
+    alert("로그아웃 되었습니다 !!");
+    setIsLoggedIn(false);
+  };
+
+  let script;
 
   useEffect(() => {
     try {
@@ -120,12 +127,19 @@ const IndexPage = () => {
         <Link href="/SignUp">
           <button>회원가입</button>
         </Link>
-        <button>로그인</button>
+
+        {isLoggedIn ? (
+          // 로그인 상태일 때 로그아웃 버튼
+          <button onClick={handleLogOutSuccess}>로그아웃</button>
+        ) : (
+          <Link href="/Login">
+            <button>로그인</button>
+          </Link>
+        )}
+
         <Link href="/Bookmark">
           <button>즐겨찾기</button>
         </Link>
-
-        <Link href="/SignUp"></Link>
       </span>
       <h2 className="title">신호등 검색기</h2>
       <button className="button" onClick={handleButtonAllLights}>

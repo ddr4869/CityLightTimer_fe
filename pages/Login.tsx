@@ -1,13 +1,16 @@
 // components/LoginForm.js
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { isLoginState } from "./states";
+import { useRecoilState } from "recoil";
 
 interface LoginFormProps {
   onLoginSuccess: (isSuccess: boolean) => void;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
+const LoginForm = () => {
   const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoginState);
   const [username, setUsername] = useState("test");
   const [password, setPassword] = useState("test");
 
@@ -35,10 +38,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
       //   // 실패 시 적절한 에러 처리를 수행
       // }
       if (username == "test" && password == "test") {
-        onLoginSuccess(true);
         console.log("로그인 성공 ");
         window.alert("로그인이 성공했습니다!");
         router.push("/");
+        setIsLoggedIn(true);
       } else {
         /**
          * 나중에 처리함
@@ -50,7 +53,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
   };
 
   return (
-    <div>
+    <div className="container">
       <label>
         아이디:
         <input
@@ -70,6 +73,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
       </label>
       <br />
       <button onClick={handleLogin}>로그인</button>
+      <button>비밀번호 찾기</button>
+      <button>아이디 찾기</button>
     </div>
   );
 };

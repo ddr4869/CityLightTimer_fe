@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import intersection from "../public/intersection.json";
+import Breadcrumb from "./\bBreadcrumb";
 
 interface BookmarkProps {
   itstId: string;
@@ -74,6 +75,9 @@ const Bookmark = () => {
 
   return (
     <div>
+      <div className="breadcrumbContainer">
+        <Breadcrumb currentPage={"즐겨찾기"} />
+      </div>
       <h2>즐겨찾기</h2>
       <table style={{ borderCollapse: "collapse", width: "100%" }}>
         <thead>

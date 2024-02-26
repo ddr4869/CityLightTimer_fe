@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { getIntersectionFromJson } from "./maplistener/intersection";
 import getNearLightTiming from "./maplistener/light";
-import { isLoginState } from "../states";
+import { breadcrumbState, isLoginState } from "../states";
 import { useRecoilState } from "recoil";
 import {
   LATITUDE,
@@ -21,12 +21,15 @@ import Breadcrumb from "./\bBreadcrumb";
 
 const IndexPage = () => {
   //Test();
+  const [currentPage, setCurrentPage] = useRecoilState(breadcrumbState);
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoginState);
   const [showNearLight, setShowNearLight] = useState(false);
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
 
-  const currentPage = "현재 페이지"; // 현재 페이지의 이름을 설정하세요.
+  const handleCurrentPage = () => {
+    setCurrentPage("home"); // 버튼 1을 활성화
+  };
 
   // 첫 번째 버튼을 클릭할 때 실행되는 함수
   const handleButtonAllLights = () => {

@@ -3,11 +3,13 @@ import Link from "next/link";
 const Breadcrumb = ({ currentPage }) => (
   <div className="breadcrumb">
     <Link href="/">
-      <span className="rightSpans">홈</span>
+      <span>CityLigthTimer</span>
     </Link>
-    <span> &gt; </span>
-    <span>{currentPage}</span>
+    {currentPage !== "main" && (
+      <div>
+        <span>{currentPage}</span>
+      </div>
+    )}
   </div>
 );
-
 export default Breadcrumb;

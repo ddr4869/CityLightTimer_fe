@@ -1,7 +1,7 @@
 // components/LoginForm.js
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { isLoginState } from "./states";
+import { isLoginState } from "../states";
 import { useRecoilState } from "recoil";
 
 interface LoginFormProps {

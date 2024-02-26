@@ -127,9 +127,18 @@ function markerListener(
           }
           content += `<p>${k}: ${v}</p>`;
         }
+        content += "<button id='addBookmarkButton'>즐겨찾기 추가</button>"; // 즐겨찾기 추가 버튼
         content += "</div>";
         infowindow.setContent(content);
         infowindow.open(map, marker);
+
+        // 즐겨찾기 추가 버튼 이벤트 처리
+        $("#addBookmarkButton").on("click", function () {
+          // 여기에 즐겨찾기 추가 동작을 수행하는 코드를 작성합니다.
+          // 예를 들어, 사용자가 선택한 신호등을 즐겨찾기에 추가하는 API 요청을 보낼 수 있습니다.
+          // 이 부분은 프로젝트의 구현에 따라 달라질 수 있습니다.
+          alert("즐겨찾기가 추가되었습니다!");
+        });
       }, 1000);
     },
     error: function (error) {

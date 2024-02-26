@@ -68,6 +68,7 @@ const Bookmark = () => {
             <th style={tableHeaderStyle}>Name</th>
             <th style={tableHeaderStyle}>Latitude</th>
             <th style={tableHeaderStyle}>Longitude</th>
+            <th style={tableHeaderStyle}></th>
           </tr>
         </thead>
         <tbody>
@@ -80,6 +81,9 @@ const Bookmark = () => {
               </td>
               <td style={tableCellStyle}>
                 {parseFloat(location.mapCtptIntLot) * 0.0000001}
+              </td>
+              <td style={tableCellStyle}>
+                <button>삭제</button>
               </td>
             </tr>
           ))}

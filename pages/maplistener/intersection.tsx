@@ -11,6 +11,16 @@ let interval: NodeJS.Timeout = null;
 let infowindow: naver.maps.InfoWindow = null;
 
 function getIntersectionFromJson(map: naver.maps.Map) {
+  // 현재 위치 가져오기
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords;
+      const currentPosition = new window.naver.maps.LatLng(latitude, longitude);
+
+      // 지도 중심 위치 설정
+      map.setCenter(currentPosition);
+    });
+  }
   const datas = require("/public/intersection.json");
   datas.forEach((item) => {
     const marker: naver.maps.Marker = createLightMarker(
@@ -35,6 +45,19 @@ function getIntersectionFromJson(map: naver.maps.Map) {
         markerListener(map, marker, markers, item.itstNm);
       }
     });
+    ////////////////////////////////////////////////////////////////////////
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        const redMarker = new window.naver.maps.Marker({
+          position: new window.naver.maps.LatLng(latitude, longitude),
+          map: map, // 기존 지도에 추가
+          icon: {
+            url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+          },
+        });
+      });
+    }
   }); // data end
 }
 
@@ -47,7 +70,6 @@ function createLightMarker(
   const marker = new window.naver.maps.Marker({
     position: new window.naver.maps.LatLng(latitude, longitude),
     map: map,
-
     title: itstId,
   });
   var menuLayer = $(

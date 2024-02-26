@@ -15,6 +15,7 @@ import {
 import addMapTrafficLayer from "./map_option";
 import Link from "next/link";
 import Login from "./Login";
+import Breadcrumb from "./\bBreadcrumb";
 //import axios from 'axios';
 // 현재 위치를 가져오는 함수
 
@@ -24,6 +25,8 @@ const IndexPage = () => {
   const [showNearLight, setShowNearLight] = useState(false);
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
+
+  const currentPage = "현재 페이지"; // 현재 페이지의 이름을 설정하세요.
 
   // 첫 번째 버튼을 클릭할 때 실행되는 함수
   const handleButtonAllLights = () => {
@@ -142,6 +145,7 @@ const IndexPage = () => {
 
   return (
     <div className="container">
+      <Breadcrumb currentPage={currentPage} />
       <span className="span">
         <Link href="/SignUp">
           <button>회원가입</button>

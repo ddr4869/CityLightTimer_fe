@@ -148,7 +148,6 @@ const IndexPage = () => {
 
   return (
     <div className="container">
-      <Breadcrumb currentPage={currentPage} />
       <span className="span">
         <Link href="/SignUp">
           <button>회원가입</button>
@@ -167,6 +166,9 @@ const IndexPage = () => {
           <button onClick={handleBookmarkClick}>즐겨찾기</button>
         </Link>
         <button onClick={handleRefreshMap}>새로고침</button>
+        <div className="breadcrumb">
+          <Breadcrumb currentPage={currentPage} />
+        </div>
       </span>
       <h2 className="title">신호등 검색기</h2>
       <button className="button" onClick={handleButtonAllLights}>

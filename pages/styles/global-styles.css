@@ -6,80 +6,85 @@
   /* 기타 스타일링 */
 }
 
-
 .container {
-    width: 100%;
-    height: 80vh;
-    position: relative;
-    text-align: center;
-  }
+  width: 100%;
+  height: 80vh;
+  position: relative;
+  text-align: center;
+}
 
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .span {
-    display: flex;
-    align-items: center;
-  }
-  
-  .span > * {
-    margin-right: 10px;
-  }
-  
-  .breadcrumb {
-    position: absolute;
-    right: 400px; /* 원하는 위치로 조절합니다. */
-    top: 1px; /* 원하는 위치로 조절합니다. */
-  }
-  
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  .breadcrumbContainer {
-    width: 100%;
-    height: 3vh;
-    position: relative;
-    text-align: center;
-  }
+.loginSpan {
+  display: flex; /* 아이템들을 가로로 나란히 정렬하기 위해 flexbox 사용 */
+  justify-content: center;
+}
 
+.loginSpan > * {
+  margin-right: 10px;
+}
 
-  .span {
-    display: flex; /* 아이템들을 가로로 나란히 정렬하기 위해 flexbox 사용 */
-    justify-content: flex-start; /* 아이템들을 왼쪽으로 정렬 */
-  }
-  
-  .title {
-    margin-bottom: 10px;
-    color: #050;
-    font-family: "Do Hyeon", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-  }
-  
-  .button {
-    margin-right: 10px;
-  }
-  
-  .map-container {
-    width: 90%;
-    height: calc(100% - 30px);
-    position: absolute;
-    top: 30px;
-    left: 5%;
-    right: 5%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  }
+.span {
+  display: flex;
+  align-items: center;
+}
 
-  body {
-    background-color: #f00f0; /* 원하는 색상 코드를 입력합니다 */
-  }
+.span > * {
+  margin-right: 10px;
+}
 
-  .do-hyeon-regular {
-    font-family: "Do Hyeon", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-  }
-  
+.breadcrumb {
+  position: absolute;
+  right: 570px; /* 원하는 위치로 조절합니다. */
+  top: 1px; /* 원하는 위치로 조절합니다. */
+}
+
+.breadcrumbContainer {
+  width: 100%;
+  height: 3vh;
+  position: relative;
+  text-align: center;
+}
+
+.span {
+  display: flex; /* 아이템들을 가로로 나란히 정렬하기 위해 flexbox 사용 */
+  justify-content: flex-start; /* 아이템들을 왼쪽으로 정렬 */
+}
+
+.title {
+  margin-bottom: 10px;
+  color: #050;
+  font-family: "Do Hyeon", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.button {
+  margin-right: 10px;
+}
+
+.map-container {
+  width: 90%;
+  height: calc(100% - 30px);
+  position: absolute;
+  top: 30px;
+  left: 5%;
+  right: 5%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  background-color: #f00f0; /* 원하는 색상 코드를 입력합니다 */
+}
+
+.do-hyeon-regular {
+  font-family: "Do Hyeon", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}

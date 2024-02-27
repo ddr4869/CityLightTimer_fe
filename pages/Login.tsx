@@ -4,6 +4,7 @@ import { useState } from "react";
 import { isLoginState } from "../states";
 import { useRecoilState } from "recoil";
 import Breadcrumb from "./\bBreadcrumb";
+import Link from "next/link";
 
 interface LoginFormProps {
   onLoginSuccess: (isSuccess: boolean) => void;
@@ -74,9 +75,17 @@ const LoginForm = () => {
         />
       </label>
       <br />
-      <button onClick={handleLogin}>로그인</button>
-      <button>비밀번호 찾기</button>
-      <button>아이디 찾기</button>
+      <br />
+
+      <span className="loginSpan">
+        <button onClick={handleLogin}>로그인</button>
+        <Link href="/SearchId">
+          <button>아이디 찾기</button>
+        </Link>
+        <Link href="/SearchPwd">
+          <button>비밀번호 찾기</button>
+        </Link>
+      </span>
     </div>
   );
 };

@@ -149,6 +149,9 @@ const IndexPage = () => {
   return (
     <div className="container">
       <span className="span">
+        <button>네이버 로그인</button>
+        <button>구글 로그인</button>
+        <button>카카오 로그인</button>
         <Link href="/SignUp">
           <button>회원가입</button>
         </Link>
@@ -162,7 +165,7 @@ const IndexPage = () => {
           </Link>
         )}
 
-        <Link href={isLoggedIn ? "/Bookmark" : "#"}>
+        <Link href={isLoggedIn ? "/Bookmark" : ""}>
           <button onClick={handleBookmarkClick}>즐겨찾기</button>
         </Link>
         <button onClick={handleRefreshMap}>새로고침</button>

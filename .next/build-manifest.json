@@ -17,6 +17,16 @@
       "static/chunks/main.js",
       "static/chunks/pages/index.js"
     ],
+    "/Bookmark": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/Bookmark.js"
+    ],
+    "/Login": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/Login.js"
+    ],
     "/SignUp": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

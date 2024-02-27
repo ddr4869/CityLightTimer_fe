@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 const Breadcrumb = ({ currentPage }) => (
-  <div className="breadcrumb">
+  <div>
     <Link href="/">
       <span>CityLigthTimer</span>
     </Link>

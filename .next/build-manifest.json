@@ -12,11 +12,6 @@
   ],
   "rootMainFiles": [],
   "pages": {
-    "/Login": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/Login.js"
-    ],
     "/SearchPwd": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

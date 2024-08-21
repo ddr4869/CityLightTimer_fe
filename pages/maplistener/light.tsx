@@ -1,5 +1,5 @@
-import { getLightCoordHtml } from '../coordHtml';
-import { markerListener, stopIntervals, resetInfowindow, createLightMarker, infowindow } from './intersection';
+import { getLightCoordHtml } from '../../component/coordHtml';
+import { markerListener, stopIntervals, resetInfowindow, createLightMarker, infowindow } from '../../component/intersection';
 import * as $ from 'jquery';
 
 let interval: NodeJS.Timeout | null = null;
@@ -16,6 +16,7 @@ interface IntersectionResponse {
 }
 
 function getNearLightTiming(map: naver.maps.Map, markers: Array<naver.maps.Marker>) {
+  if (typeof window !== 'undefined' && window.naver) {
   map.addListener('dragend', function () {
     // Clear existing markers
     markers.forEach(marker => marker.setMap(null));
@@ -23,7 +24,7 @@ function getNearLightTiming(map: naver.maps.Map, markers: Array<naver.maps.Marke
 
     const center = map.getCenter();
     $.ajax({
-      url: process.env.NEXT_PUBLIC_HOST+'api/intersection/list/neighbor', // 요청 보낼 URL
+      url: process.env.NEXT_PUBLIC_HOST+'/api/intersection/list/neighbor', // 요청 보낼 URL
       type: 'GET', // HTTP 메소드
       dataType: 'text', // 응답 데이터 타입
       data: {
@@ -69,6 +70,7 @@ function getNearLightTiming(map: naver.maps.Map, markers: Array<naver.maps.Marke
       },
     });
   });
+}
 }
 
 function createNoDataMarker(map: naver.maps.Map, latitude: number, longitude: number) {

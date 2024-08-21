@@ -1,7 +1,7 @@
 import $ from 'jquery';
-import { getLightCoordHtml } from '../coordHtml';
-import Test from '../test';
-import { Light_information, Light_information_timer } from '../light_information';
+import { getLightCoordHtml } from './coordHtml';
+import Test from '../pages/test';
+import { Light_information, Light_information_timer } from './light_information';
 
 let interval: NodeJS.Timeout | null = null;
 let infowindow: naver.maps.InfoWindow | null = null;

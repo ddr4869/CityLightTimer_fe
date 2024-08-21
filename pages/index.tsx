@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import {getIntersectionFromJson} from "./maplistener/intersection";
+import {getIntersectionFromJson} from "../component/intersection";
 import getNearLightTiming from "./maplistener/light";
-import {LATITUDE, LONGITUDE, getLocation, getGangnamLocation, getCityHallLocation, getYeouidoLocation, getSangamLocation} from "./geolocation";
+import {LATITUDE, LONGITUDE, getLocation, getGangnamLocation, getCityHallLocation, getYeouidoLocation, getSangamLocation} from "../component/geolocation";
 import addMapTrafficLayer from "./map_option";
 
 

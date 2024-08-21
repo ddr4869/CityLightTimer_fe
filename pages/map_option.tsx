@@ -1,6 +1,7 @@
 
 import $ from 'jquery';
 function addMapTrafficLayer(map:naver.maps.Map) {
+    if (typeof window !== 'undefined' && window.naver) {
     console.log("교통상황 test")
     var trafficLayer = new naver.maps.TrafficLayer({
         interval: 300000 // 5분마다 새로고침 (최소값 5분)
@@ -43,6 +44,7 @@ function addMapTrafficLayer(map:naver.maps.Map) {
     naver.maps.Event.once(map, 'init', function() {
         trafficLayer.setMap(map);
     });
+}
 }
 
 export default addMapTrafficLayer;

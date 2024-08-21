@@ -6,7 +6,7 @@ function Light() {
     useEffect(() => {
         // jQuery를 사용하여 Ajax 요청 보내기
         $.ajax({
-          url: 'http://localhost:8080/api/light', // 요청 보낼 URL
+          url: process.env.NEXT_PUBLIC_HOST+'/api/light', // 요청 보낼 URL
           type: 'GET', // HTTP 메소드
           dataType: 'text', // 응답 데이터 타입
           data: {

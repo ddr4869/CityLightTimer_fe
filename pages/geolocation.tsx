@@ -6,7 +6,7 @@ const options = {
   maximumAge: 0,
 };
 
-function success(pos) {
+function success(pos:GeolocationPosition) {
   const crd = pos.coords;
 
   console.log("Your current position is:");
@@ -18,7 +18,7 @@ function success(pos) {
   return crd
 }
 
-function error(err) {
+function error(err:GeolocationPositionError) {
   console.warn(`ERROR(${err.code}): ${err.message}`);
   LATITUDE = 37.5; 
   LONGITUDE = 127.05;

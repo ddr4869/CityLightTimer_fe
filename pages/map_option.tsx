@@ -12,7 +12,7 @@ function addMapTrafficLayer(map:naver.maps.Map) {
         if (trafficLayer) {
             btn.addClass('control-on');
             $("#autorefresh").parent().show();
-            $("#autorefresh")[0].checked = true;
+            ($("#autorefresh")[0] as HTMLInputElement).checked = true;
         } else {
             btn.removeClass('control-on');
             $("#autorefresh").parent().hide();

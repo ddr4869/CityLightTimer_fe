@@ -1,17 +1,8 @@
 import { useState, useEffect } from "react";
-import $ from "jquery";
-import Light from "./traffic_light";
-import LightTest from "./traffic_light_test";
-import Light_locate from "./light_locate";
 import {getIntersectionFromJson} from "./maplistener/intersection";
-import getIntersectionFromJsonTest from "./maplistener/testIntersection";
 import getNearLightTiming from "./maplistener/light";
-import { getLightCoordHtml, getLatLonHtml } from "./coordHtml";
 import {LATITUDE, LONGITUDE, getLocation, getGangnamLocation, getCityHallLocation, getYeouidoLocation, getSangamLocation} from "./geolocation";
 import addMapTrafficLayer from "./map_option";
-import Test from "./test";
-//import axios from 'axios';
-// 현재 위치를 가져오는 함수
 
 
 const IndexPage = () => {
@@ -21,12 +12,12 @@ const IndexPage = () => {
   const [longitude, setLongitude] = useState(0);
 
   // 첫 번째 버튼을 클릭할 때 실행되는 함수
-  const handleButtonAllLights = () => {
+  const handleButtonNearLights = () => {
     setShowNearLight(true); // 버튼 1을 활성화
   };
 
   // 두 번째 버튼을 클릭할 때 실행되는 함수
-  const handleButtonNearLights = () => {
+  const handleButtonAllLights = () => {
     setShowNearLight(false); // 버튼 1을 활성화
   };
 
@@ -71,7 +62,7 @@ const IndexPage = () => {
       // 네이버 지도 API 스크립트 동적으로 로드
       script = document.createElement("script");
       script.src =
-        "https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=e27tyis8vn";
+        "https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId="+process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID;
       script.async = true;
       document.head.appendChild(script);
       loadScript(script, LATITUDE, LONGITUDE);
@@ -90,7 +81,7 @@ const IndexPage = () => {
     script.onload = () => {
       // 네이버 지도 초기화 및 표시
       console.log(LATITUDE, LONGITUDE);
-      const mapOptions = {
+      const mapOptions:any = {
         //center: new window.naver.maps.LatLng(LATITUDE, LONGITUDE),
         center: new window.naver.maps.LatLng(latitude, longitude),
         zoom: 15,
@@ -112,13 +103,14 @@ const IndexPage = () => {
         }
       }
   };
+  
 
 
   return (
     <div className="container">
       <h2 className="title">신호등 검색기</h2>
-      <button className="button" onClick={handleButtonAllLights}>주위 신호등만 표시</button>
-      <button className="button" onClick={handleButtonNearLights}>전체 신호등 표시</button>
+      <button className="button" onClick={handleButtonNearLights}>주위 신호등만 표시</button>
+      <button className="button" onClick={handleButtonAllLights}>전체 신호등 표시</button>
       <br></br><br></br>
       <button className="button" onClick={handleButtonCurrentLocation}>현재 위치</button>
       <button className="button" onClick={handleButtonGangnamLocation}>강남</button>

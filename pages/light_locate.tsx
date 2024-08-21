@@ -2,10 +2,14 @@ import $ from 'jquery';
 import { promises as fs } from 'fs'
 import path from 'path'
 
-function Light_locate(map: window.naver.maps.Map) {
-
+function Light_locate(map: any) {
+    interface IntersectionItem {
+      mapCtptIntLat: number;
+      mapCtptIntLot: number;
+      itstId: string;
+    }
     //let testData = fs.readFile('/Users/ieungyu/project/nextjs/CityLightTimer_fe/intersection.json', 'utf8');
-    const datas = require('/public/intersection.json')
+    const datas: IntersectionItem[] = require('/public/intersection.json')
 
     datas.forEach(item => {
         const _ = new window.naver.maps.Marker({
